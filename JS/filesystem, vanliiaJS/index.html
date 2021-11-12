@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='./index.js'></script>
+    <title>filesystem</title>
+</head>
+<body>
+    <button class="fileOpen">파일 불러오기</button>
+    <!--pre tag는 미리 정의된 text 등을 그대로 표현하고자 할때 사용-->
+    <pre class="textArea" contenteditable></pre>
+    <button class="fileSave">파일 저장하기</button>
+    <button class="fileSaveAs">다른 이름으로 파일 저장하기</button>
+</body>
+<script>
+    let fileOpenButton = document.querySelector('body .fileOpen');
+    let textArea = document.querySelector('pre');
+    let fileBuffer = null;
+
+    //file open
+    fileOpenButton.addEventListener('click', click);
+    //save to buffer
+    async function click(){
+        //get file data
+        //buffer의 세부적인 method 사용을 위해 비구조화 방식으로 선언.
+        [fileBuffer] = await window.showOpenFilePicker();
+        //console.log(fileBuffer.types);
+        /*불러오는 파일의 정보 특정 가능
+        [fileBuffer] = await window.showOpenFilePicker({
+            types: [
+                {
+                    description : 'specifiy file type'
+                    accept : {
+                        'image/*' : ['.py', '.gif', '.jpeg', '.jpg', '.js', '.html']
+                    }
+                }
+            ]
+        })
+        */
+        //console.log(fileBuffer);
+        
+        //read file data
+        let fileData = await fileBuffer.getFile();
+        console.log(fileData);
+
+        //interface file data
+        let text = await fileData.text();
+        textArea.innerText = text;
+        //console.log(text);
+    }
+
+    //file save
+    let fileSaveButton = document.querySelector('body .fileSave');
+    fileSaveButton.addEventListener('click', save);
+
+    async function save(){
+        let stream = await fileBuffer.createWritable();
+        await stream.write(textArea.innerText);
+        await stream.close();
+    }
+   
+    //file save as
+    let fileSaveAsButton = document.querySelector('body .fileSaveAs');
+    fileSaveAsButton.addEventListener('click', saveAs);
+
+    async function saveAs(){
+        fileBuffer = await window.showSaveFilePicker();
+        
+        let stream = await fileBuffer.createWritable();
+        await stream.write(textArea.innerText);
+        await stream.close();
+    }
+    
+</script>
+</html>
