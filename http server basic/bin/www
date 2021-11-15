@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+ var APISERVER = require('../server/API.js');
+ var CLIENTSERVER = require('../server/client.js');
+
+ var debug = require('debug')('httpserver2:server');
+ var http = require('http');
+ 
+ /**
+  * Get port from environment and store in Express.
+  */
+ 
+ var port1 = 3000;
+ APISERVER.set('port', port1);
+
+ var port2 = 8000;
+ CLIENTSERVER.set('port', port2);
+ 
+ /**
+  * Create HTTP server.
+  */
+ 
+ var server1 = http.createServer(APISERVER);
+ var server2 = http.createServer(CLIENTSERVER);
+ 
+ /**
+  * Listen on provided port, on all network interfaces.
+  */
+ 
+ server1.listen(port1, console.log(`SERVER RUNNING ON ${port1}`));
+ server2.listen(port2, console.log(`SERVER RUNNING ON ${port2}`));
