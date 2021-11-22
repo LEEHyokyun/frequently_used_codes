@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/mainstyle.css" type="text/css">
+    <title>main</title>
+</head>
+<body>
+    <h1>LOGIN</h1>
+    <fieldset>
+        <legend>INSERT USER DATA</legend>
+        <input id="insertID" type = 'text' placeholder="PLEASE WRITE ID"/>
+        <input id="insertPW" type = 'password'placeholder="PLEASE WRITE PW"/>
+        <button id="insertBTN" type="button">SIGN IN</button>
+    </fieldset>
+    <fieldset>
+        <legend>LOG IN</legend>
+        <input id="loginID" type = 'text' placeholder="PLEASE WRITE ID"/>
+        <input id="loginPW" type = 'password'placeholder="PLEASE WRITE PW"/>
+        <button id="loginBTN" type="button">LOG IN</button>
+    </fieldset>
+    <button id="moveToJWT">MOVE TO JWT PAGE</button>
+</body>
+<script>
+    const moveToJWT = document.getElementById('moveToJWT');
+    moveToJWT.addEventListener('click', ()=> {
+        location.href = ('/jwt');
+    })
+
+
+    const insertID = document.getElementById('insertID');
+    const insertPW = document.getElementById('insertPW');
+    const insertBTN = document.getElementById('insertBTN');
+
+    //USE DATA INSERT
+    insertBTN.addEventListener('click', ()=>{
+        let key = insertID.value;
+        let value = insertPW.value;
+
+        if(key && value){
+            localStorage.setItem(key, value);
+            alert('Successfully inserted!');
+            location.reload();
+        }
+    })
+
+    //LOG IN and page link(href)
+    const loginID = document.getElementById('loginID');
+    const loginPW = document.getElementById('loginPW');
+    const loginBTN = document.getElementById('loginBTN');
+
+    loginBTN.addEventListener('click', ()=> {
+        
+        if(loginID.value && loginPW.value){
+        for(i=0; i<localStorage.length; i++){
+            //console.log(localStorage.key(i));
+            //ID and PW check
+            if(loginID.value == localStorage.key(i)){
+                let getPW = localStorage.getItem(localStorage.key(i));
+                if(loginPW.value == getPW){
+                    location.href = `index/${loginID.value}`
+                    break;
+                }else{
+                    alert('INCORRECT PW');
+                    break;
+                }
+            }
+            if(i == localStorage.length - 1){
+                //console.log(localStorage.key(i));
+                alert('INCORRECT ID');
+            }   
+        }
+        
+    }
+    })
+    
+</script>
+</html>

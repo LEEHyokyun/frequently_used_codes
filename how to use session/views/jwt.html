@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT</title>
+</head>
+<body>
+    <fieldset>
+        <legend>**INSER USER DATA : JWT TOKEN**</legend>
+        <form method='POST' action=/jwt/add>
+        <input id="insertIDforJWT" name="ID" type = 'text' placeholder="PLEASE WRITE ID"/>
+        <input id="insertPWforJWT" name="PW" type = 'password'placeholder="PLEASE WRITE PW"/>
+        <button id="insertBTNforJWT" type="submit">CREATE TOEKN</button>
+        </form>
+        <form method='POST' action=/jwt/check>
+            <input id="checkIDforJWT" name="ID" type = 'text' placeholder="PLEASE WRITE ID"/>
+            <input id="checkPWforJWT" name="PW" type = 'password'placeholder="PLEASE WRITE PW"/>
+            <button id="checkBTNforJWT" type="submit">CHECK TOEKN</button>
+            </form>
+    </fieldset>
+</body>
+</html>
