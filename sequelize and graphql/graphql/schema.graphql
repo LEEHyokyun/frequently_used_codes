@@ -1,0 +1,13 @@
+type userInfor {
+    id: Int!
+    userID: String!
+    userPW: String!
+}
+##filtered한 형태는 iterable(객체)형태이므로 이를 type Query에 반영한다.##
+
+type Query {
+    getAllUserInfor: [userInfor]!
+    getUserInfor(userID: String!): userInfor!
+    setUserData(userID: String!, userPW: String!): [userInfor]!
+    deleteUserData(userID: String!): [userInfor]!
+}
